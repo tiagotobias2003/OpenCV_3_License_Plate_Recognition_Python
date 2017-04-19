@@ -49,7 +49,7 @@ def loadKNNDataAndTrainKNN():
     try:
         npaClassifications = np.loadtxt("classifications.txt", np.float32)                  # read in training classifications
     except:                                                                                 # if file could not be opened
-        print "error, unable to open classifications.txt, exiting program\n"                # show error message
+        print("error, unable to open classifications.txt, exiting program\n")                # show error message
         os.system("pause")
         return False                                                                        # and return False
     # end try
@@ -57,7 +57,7 @@ def loadKNNDataAndTrainKNN():
     try:
         npaFlattenedImages = np.loadtxt("flattened_images.txt", np.float32)                 # read in training images
     except:                                                                                 # if file could not be opened
-        print "error, unable to open flattened_images.txt, exiting program\n"               # show error message
+        print("error, unable to open flattened_images.txt, exiting program\n")               # show error message
         os.system("pause")
         return False                                                                        # and return False
     # end try
@@ -144,7 +144,7 @@ def detectCharsInPlates(listOfPossiblePlates):
         if (len(listOfListsOfMatchingCharsInPlate) == 0):			# if no groups of matching chars were found in the plate
 
             if Main.showSteps == True: # show steps ###############################################
-                print "chars found in plate number " + str(intPlateCounter) + " = (none), click on any image and press a key to continue . . ."
+                print("chars found in plate number " + str(intPlateCounter) + " = (none), click on any image and press a key to continue . . .")
                 intPlateCounter = intPlateCounter + 1
                 cv2.destroyWindow("8")
                 cv2.destroyWindow("9")
@@ -211,7 +211,7 @@ def detectCharsInPlates(listOfPossiblePlates):
         possiblePlate.strChars = recognizeCharsInPlate(possiblePlate.imgThresh, longestListOfMatchingCharsInPlate)
 
         if Main.showSteps == True: # show steps ###################################################
-            print "chars found in plate number " + str(intPlateCounter) + " = " + possiblePlate.strChars + ", click on any image and press a key to continue . . ."
+            print("chars found in plate number " + str(intPlateCounter) + " = " + possiblePlate.strChars + ", click on any image and press a key to continue . . .")
             intPlateCounter = intPlateCounter + 1
             cv2.waitKey(0)
         # end if # show steps #####################################################################
@@ -219,7 +219,7 @@ def detectCharsInPlates(listOfPossiblePlates):
     # end of big for loop that takes up most of the function
 
     if Main.showSteps == True:
-        print "\nchar detection complete, click on any image and press a key to continue . . .\n"
+        print("\nchar detection complete, click on any image and press a key to continue . . .\n")
         cv2.waitKey(0)
     # end if
 
