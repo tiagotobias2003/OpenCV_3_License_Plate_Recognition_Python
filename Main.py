@@ -8,6 +8,9 @@ import DetectChars
 import DetectPlates
 import PossiblePlate
 
+ap.add_argument("-i", "--image", help = "caminho para imagem da placa")
+args = vars(ap.parse_args())
+
 # module level variables ##########################################################################
 SCALAR_BLACK = (0.0, 0.0, 0.0)
 SCALAR_WHITE = (255.0, 255.0, 255.0)
@@ -27,17 +30,31 @@ def main():
         return                                                          # and exit program
     # end if
 
-    imgOriginalScene  = cv2.imread("LicPlateImages/braz.jpg")               # open image
+    if not args.get("image", False):
+        camera = cv2.VideoCapture(0)
+        if cv2.VideoCapture.isOpened()
+            print("\nCapturando placa na imagem")
+            while len(listOfPossiblePlates) == 0:
+                print(".")
+                (grabbed, imgOriginalScene) = camera.read()
+                listOfPossiblePlates = DetectPlates.detectPlatesInScene(imgOriginalScene)           # detect plates
+                listOfPossiblePlates = DetectChars.detectCharsInPlates(listOfPossiblePlates)        # detect chars in plates
+            print("\n Placa detectada \n\n")
+        else:
+            print("\nerror: Nao ha camera conectada \n\n")      # print error message to std out
+            os.system("pause")                                  # pause so user can see error message
+            return 
+
+    else:
+        imgOriginalScene  = cv2.imread(args["image"]) #cv2.imread("LicPlateImages/braz.jpg") # open image
+        listOfPossiblePlates = DetectPlates.detectPlatesInScene(imgOriginalScene)           # detect plates
+        listOfPossiblePlates = DetectChars.detectCharsInPlates(listOfPossiblePlates)        # detect chars in plates
 
     if imgOriginalScene is None:                            # if image was not read successfully
         print("\nerror: image not read from file \n\n")      # print error message to std out
         os.system("pause")                                  # pause so user can see error message
         return                                              # and exit program
     # end if
-
-    listOfPossiblePlates = DetectPlates.detectPlatesInScene(imgOriginalScene)           # detect plates
-
-    listOfPossiblePlates = DetectChars.detectCharsInPlates(listOfPossiblePlates)        # detect chars in plates
 
     cv2.imshow("imgOriginalScene", imgOriginalScene)            # show scene image
 
@@ -74,6 +91,7 @@ def main():
     # end if else
 
     cv2.waitKey(0)					# hold windows open until user presses a key
+    camera.release()
 
     return
 # end main
